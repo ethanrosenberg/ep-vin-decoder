@@ -228,16 +228,24 @@ ResponsiveContainer.propTypes = {
 
 class HomepageLayout extends Component {
   state = {
-    results: []
+    message: ''
 
   }
-  componentDidMount(){
+
+  componentDidMount() {
     fetch('https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVinValues/YV1902TH6F2304610?format=json&modelyear=2011')
-      .then(response => {
-        return response.json();
-      })
-      .then(data => console.log(data));
-  }
+    // We get the API response and receive data in JSON format...
+    .then(response => response.json())
+    // ...then we update the users state
+    .then(data =>
+     this.setState({
+       message: data.Message
+     })
+    )
+
+
+
+}
 
   render(){
 
@@ -252,9 +260,7 @@ class HomepageLayout extends Component {
               Did We Tell You About Our Bananas?
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but
-              it's really true. It took years of gene splicing and combinatory DNA research, but our
-              bananas can really dance.
+              {this.state.message}
             </p>
             <Button as='a' size='large'>
               I'm Still Quite Interested
