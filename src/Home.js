@@ -228,7 +228,7 @@ ResponsiveContainer.propTypes = {
 
 class HomepageLayout extends Component {
   state = {
-    message: ''
+    results = []
 
   }
 
@@ -238,8 +238,11 @@ class HomepageLayout extends Component {
     .then(response => response.json())
     // ...then we update the users state
     .then(data =>
+      items = data.Results.map((item, key)) =>
+       <p>{item}: {key}</p>
+      );
      this.setState({
-       message: data.Message
+       results: items
      })
     )
 
@@ -257,10 +260,10 @@ class HomepageLayout extends Component {
 
 
             <Header as='h3' style={{ fontSize: '2em' }}>
-              Did We Tell You About Our Bananas?
+              Vin Decoder Results
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              {this.state.message}
+              {this.state.results}
             </p>
             <Button as='a' size='large'>
               I'm Still Quite Interested
